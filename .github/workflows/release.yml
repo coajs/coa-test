@@ -18,6 +18,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org
+
       - name: Build
         run: |
           yarn
@@ -29,7 +34,7 @@ jobs:
 
       - name: Publish
         env:
-          NPM_AUTH_TOKEN: ${{ secrets.AEX_NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.AEX_NPM_TOKEN }}
         run: |
           yarn publish out --no-git-tag-version --new-version ${{ github.event.release.tag_name }}
 
